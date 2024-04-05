@@ -94,6 +94,11 @@ pub(crate) fn generate_internal<T: Service>(
                     #service_ident::new(InterceptedService::new(inner, interceptor))
                 }
 
+                /// Check if the inner client is able to issue a request
+                pub async fn ready(&mut self) -> Result<(), T::Error> {
+                    self.inner.ready().await
+                }
+
                 /// Compress requests with the given encoding.
                 ///
                 /// This requires the server to support it otherwise it might respond with an
